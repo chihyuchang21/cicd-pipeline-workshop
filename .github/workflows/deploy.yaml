@@ -27,6 +27,6 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script: |
             echo "EC2_PORT: ${{ secrets.EC2_PORT }}"
-        # cd /home/ubuntu/cicd-pipeline-workshop
-        # git pull
-        # pm2 restart src/server.js
+            cd /home/ubuntu/cicd-pipeline-workshop
+            git pull
+            pm2 restart src/server.js
