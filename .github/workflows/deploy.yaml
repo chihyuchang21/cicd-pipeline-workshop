@@ -14,12 +14,19 @@ jobs:
     # 每個 step 可以用 run 來叫用其他 GitHub Actions
     # 或是使用 run 來執行 shell 指令
     steps:
-      - name: Echo Test
-        run: echo "Test Deploy updated full secrets"
-      # 使用 actions/checkout 來 checkout repository
-      # 可能需要進行後續編譯或測試之類的
+      - name: Checkout repository
+        uses: actions/checkout@v2
       
+      # Run Test
+      - name: Run test
+        run: ./node_modules/.bin/mocha --reporter spec
+      
+      - name: Echo on failure
+        if: failure()
+        run: echo "tests not passed"
+
       - name: deploy to ec2
+        if: success() # 確保只有在前面的步驟成功時才執行
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -31,3 +38,5 @@ jobs:
             cd /home/ubuntu/cicd-pipeline-workshop
             git pull
             pm2 restart src/server.js
+
+      # checkout action ./node_modules/.bin/mocha --reporter spec (測試過了才 deploy)
