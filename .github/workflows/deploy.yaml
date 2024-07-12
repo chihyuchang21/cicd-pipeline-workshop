@@ -14,7 +14,7 @@ jobs:
     # 或是使用 run 來執行 shell 指令
     steps:
       - name: Echo Test
-        run: echo "Test Deploy"
+        run: echo "Test Deploy updated full secrets"
       # 使用 actions/checkout 來 checkout repository
       # 可能需要進行後續編譯或測試之類的
       
