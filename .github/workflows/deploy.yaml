@@ -13,17 +13,20 @@ jobs:
     # 每個 step 可以用 run 來叫用其他 GitHub Actions
     # 或是使用 run 來執行 shell 指令
     steps:
-      - run: echo "Test Deploy"
+      - name: Echo Test
+        run: echo "Test Deploy"
       # 使用 actions/checkout 來 checkout repository
       # 可能需要進行後續編譯或測試之類的
-      # - name: deploy to ec2
-      # uses: appleboy/ssh-action@v1.0.3
-      # with:
-      #   host: ${{ secrets.EC2_HOST }}
-      #   username: ${{ secrets.EC2_USERNAME }}
-      #   key: ${{ secrets.EC2_KEY }}
-      #   port: ${{ secrets.EC2_PORT }}
-      #   script: |
-      #     cd /home/ubuntu/cicd-pipeline-workshop
-      #     git pull
-      #     pm2 restart src/server.js
+      
+      - name: deploy to ec2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          script: |
+            echo "EC2_PORT: ${{ secrets.EC2_PORT }}"
+        # cd /home/ubuntu/cicd-pipeline-workshop
+        # git pull
+        # pm2 restart src/server.js
